@@ -74,17 +74,17 @@ if (
             });
     });
 
-    form.on('submit', function(event) {
-        event.preventDefault();
+    // form.on('submit', function(event) {
+    //     event.preventDefault();
 
-        var notification = {};
-        form.find('input').each(function () {
-            var input = $(this);
-            notification[input.attr('name')] = input.val();
-        });
+    //     var notification = {};
+    //     form.find('input').each(function () {
+    //         var input = $(this);
+    //         notification[input.attr('name')] = input.val();
+    //     });
 
-        sendNotification(notification);
-    });
+    //     sendNotification(notification);
+    // });
 
     // handle catch the notification on current page
     messaging.onMessage(function(payload) {
@@ -181,49 +181,49 @@ function getToken() {
 }
 
 
-function sendNotification(notification) {
-    var key = 'AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs';
+// function sendNotification(notification) {
+//     var key = 'AAAAaGQ_q2M:APA91bGCEOduj8HM6gP24w2LEnesqM2zkL_qx2PJUSBjjeGSdJhCrDoJf_WbT7wpQZrynHlESAoZ1VHX9Nro6W_tqpJ3Aw-A292SVe_4Ho7tJQCQxSezDCoJsnqXjoaouMYIwr34vZTs';
 
-    console.log('Send notification', notification);
+//     console.log('Send notification', notification);
 
-    // hide last notification data
-    info.hide();
-    massage_row.hide();
+//     // hide last notification data
+//     info.hide();
+//     massage_row.hide();
 
-    messaging.getToken()
-        .then(function(currentToken) {
-            fetch('https://fcm.googleapis.com/fcm/send', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'key=' + key,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    // Firebase loses 'image' from the notification.
-                    // And you must see this: https://github.com/firebase/quickstart-js/issues/71
-                    data: notification,
-                    to: currentToken
-                })
-            }).then(function(response) {
-                return response.json();
-            }).then(function(json) {
-                console.log('Response', json);
+//     messaging.getToken()
+//         .then(function(currentToken) {
+//             fetch('https://fcm.googleapis.com/fcm/send', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Authorization': 'key=' + key,
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify({
+//                     // Firebase loses 'image' from the notification.
+//                     // And you must see this: https://github.com/firebase/quickstart-js/issues/71
+//                     data: notification,
+//                     to: currentToken
+//                 })
+//             }).then(function(response) {
+//                 return response.json();
+//             }).then(function(json) {
+//                 console.log('Response', json);
 
-                if (json.success === 1) {
-                    massage_row.show();
-                    massage_id.text(json.results[0].message_id);
-                } else {
-                    massage_row.hide();
-                    massage_id.text(json.results[0].error);
-                }
-            }).catch(function(error) {
-                showError(error);
-            });
-        })
-        .catch(function(error) {
-            showError('Error retrieving Instance ID token', error);
-        });
-}
+//                 if (json.success === 1) {
+//                     massage_row.show();
+//                     massage_id.text(json.results[0].message_id);
+//                 } else {
+//                     massage_row.hide();
+//                     massage_id.text(json.results[0].error);
+//                 }
+//             }).catch(function(error) {
+//                 showError(error);
+//             });
+//         })
+//         .catch(function(error) {
+//             showError('Error retrieving Instance ID token', error);
+//         });
+// }
 
 // Send the Instance ID token your application server, so that it can:
 // - send messages back to this app
